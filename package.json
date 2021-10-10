@@ -1,0 +1,23 @@
+{
+  "name": "meeti",
+  "version": "1.0.0",
+  "description": "Proyecto meeti con Node, PostgreSQL y EJS",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon ./index.js"
+  },
+  "keywords": [
+    "Nodejs",
+    "PostgreSQL",
+    "EJS"
+  ],
+  "author": "Alberto Cházaro Romero",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.13"
+  },
+  "dependencies": {
+    "dotenv": "^10.0.0",
+    "express": "^4.17.1"
+  }
+}
