@@ -3,10 +3,10 @@ const router = express.Router();
 
 module.exports = function() {
     router.get('/', (req, res) => {
-        res.send('Inicio')
+        res.render('home')
     });
     router.get('/crear-cuenta', (req, res) => {
-        res.send('Crear cuenta');
+        res.render('crear-cuenta');
     });
 
     return router;
