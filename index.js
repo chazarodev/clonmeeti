@@ -2,6 +2,11 @@ const express = require('express');
 const expressEjsLayouts = require('express-ejs-layouts');
 const path = require('path');
 const router = require('./routes');
+
+// Importar configuración db
+const db = require('./config/db');
+db.sync().then(() => console.log('db Conectada')).catch((error) => console.log(error));
+
 require('dotenv').config({path: 'variables.env'});
 
 
