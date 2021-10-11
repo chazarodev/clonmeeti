@@ -7,16 +7,39 @@ exports.formCrearCuenta = (req, res) => {
 }
 
 exports.crearNuevaCuenta = async (req, res) => {
-    const Usuario = req.body
+    const usuario = req.body
+
+    req.checkBody('confirmar', 'El password confirmado no puede ir vacío').notEmpty();
+    req.checkBody('confirmar', 'El password no coincide').equals(req.body.password);
+
+    // Lee los errores de express
+    const erroresExpress = req.validationErrors();
 
     try {
-        const usuario = await Usuarios.create(Usuario);
-        // TODO flash message y redireccionar
-        console.log(usuario);
+        await Usuarios.create(usuario);
+        // flash message y redireccionar
+        req.flash('exito', 'Hemos enviado un email, confirma tu cuenta');
+        res.redirect('/iniciar-sesion')
+
     } catch (error) {
+
+        // Extraer el message de los errores sequelize
         const erroresSequelize = error.errors.map(err => err.message);
-        // console.log(erroresSequelize);
-        req.flash('error', erroresSequelize);
+        
+        // Extraer el msg de los errores de express
+        const errExp = erroresExpress.map(err => err .msg)
+
+        // Unir ambos errores
+        const listaErrores = [...erroresSequelize, ...errExp]
+
+        req.flash('error', listaErrores);
         res.redirect('/crear-cuenta');
     }
+}
+
+// Formulario para iniciar sesión
+exports.formIniciarSesion = (req, res) => {
+    res.render('iniciar-sesion', {
+        nombrePagina: 'Iniciar Sesión'
+    })
 }

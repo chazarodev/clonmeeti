@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const expressValidator = require('express-validator');
 const router = require('./routes');
 
 // Importar configuración db y modelos
@@ -21,6 +22,9 @@ const app = express();
 // Body parser, leer formularios
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
+
+//Express Validator
+app.use(expressValidator());
 
 // Habilitar EJS como template engine
 app.use(expressEjsLayouts)
