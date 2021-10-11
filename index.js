@@ -5,6 +5,7 @@ const router = require('./routes');
 
 // Importar configuración db
 const db = require('./config/db');
+require('./models/Usuarios');
 db.sync().then(() => console.log('db Conectada')).catch((error) => console.log(error));
 
 require('dotenv').config({path: 'variables.env'});
