@@ -9,6 +9,7 @@ exports.formCrearCuenta = (req, res) => {
 
 exports.crearNuevaCuenta = async (req, res) => {
     const usuario = req.body
+    console.log(usuario);
 
     req.checkBody('confirmar', 'El password confirmado no puede ir vacío').notEmpty();
     req.checkBody('confirmar', 'El password no coincide').equals(req.body.password);
@@ -20,7 +21,7 @@ exports.crearNuevaCuenta = async (req, res) => {
         await Usuarios.create(usuario);
 
         //URL de confirmación
-        const url = `hhtp://${req.header.host}/confirmar-cuenta/${usuario.email}`;
+        const url = `http://${req.headers.host}/confirmar-cuenta/${usuario.email}`;
 
         //Enviar email de confirmación
         await enviarEmail.enviarEmail({
@@ -49,6 +50,25 @@ exports.crearNuevaCuenta = async (req, res) => {
         req.flash('error', listaErrores);
         res.redirect('/crear-cuenta');
     }
+}
+
+//Confirma la suscripción del usuario
+exports.confirmarCuenta = async (req, res, next) => {
+    // Verificar que el usuario exista
+    const usuario = await Usuarios.findOne({where: {email: req.params.correo}})
+
+    // De no existir, reddireccionar
+    if (!usuario) {
+        req.flash('error', 'No existe esa cuenta');
+        res.redirect('/crear-cuenta');
+        return next();
+    }
+
+    // Si existe, confirmar suscripción y redireccionar
+    usuario.activo = 1;
+    await usuario.save();
+    req.flash('exito', 'La cuenta se ha confirmado, ya puedes iniciar sesión');
+    res.redirect('/iniciar-sesion');
 }
 
 // Formulario para iniciar sesión

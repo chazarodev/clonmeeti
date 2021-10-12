@@ -28,13 +28,6 @@ const Usuarios = db.define('usuarios', {
             notEmpty: {msg: 'El password no debe de ir vacío'}
         }
     },
-    confirmar: {
-        type: Sequelize.STRING(60),
-        allowNull: false,
-        validate: {
-            notEmpty: {msg: 'Confirma tu password'}
-        }
-    },
     activo: {
         type: Sequelize.INTEGER,
         defaultValue: 0
