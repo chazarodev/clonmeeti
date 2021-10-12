@@ -6,6 +6,7 @@ const flash = require('connect-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const expressValidator = require('express-validator');
+const passport = require('./config/passport');
 const router = require('./routes');
 
 // Importar configuración db y modelos
@@ -46,6 +47,10 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }));
+
+//Inicializar passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Agregar flash messages
 app.use(flash());

@@ -4,6 +4,7 @@ const router = express.Router();
 //Importar controladores
 const homeController = require('../controllers/homeController');
 const usuariosController = require('../controllers/usuariosController');
+const authController = require('../controllers/authController');
 
 module.exports = function() {
     router.get('/', homeController.home);
@@ -15,6 +16,7 @@ module.exports = function() {
 
     // Iniciar sesión
     router.get('/iniciar-sesion', usuariosController.formIniciarSesion);
+    router.post('/iniciar-sesion', authController.autenticarUsuario);
 
     return router;
 }
