@@ -12,6 +12,7 @@ const router = require('./routes');
 // Importar configuración db y modelos
 const db = require('./config/db');
 require('./models/Usuarios');
+require('./models/Categorias');
 db.sync().then(() => console.log('db Conectada')).catch((error) => console.log(error));
 
 //Variables de desarrollo
