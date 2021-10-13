@@ -1,3 +1,6 @@
 /node_modules
 variables.env
 public/img
+trix.js
+trix.css
+assets
