@@ -43,6 +43,10 @@ module.exports = function() {
         authController.usuarioAutenticado,
         gruposController.formEditarGrupo
     );
+    router.post('/editar-grupo/:grupoId', 
+        authController.usuarioAutenticado,
+        gruposController.editarGrupo
+    );
 
     return router;
 }
