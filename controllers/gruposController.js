@@ -2,6 +2,7 @@ const Categorias = require('../models/Categorias');
 const Grupos = require('../models/Grupos');
 const multer = require('multer');
 const shortid = require('shortid');
+const fs = require('fs');
 
 const configuracionMulter = {
     limits: {fileSize: 100000},
@@ -140,10 +141,67 @@ exports.editarGrupo = async (req, res, next) => {
 
 //Muestra el formulario para editar una imagen de grupo
 exports.formEditarImagen = async (req, res) => {
-    const grupo = await Grupos.findByPk(req.params.grupoId);
+
+    const grupo = await Grupos.findOne({
+        where: {
+            id: req.params.grupoId, 
+            usuarioId: req.user.id
+        }
+    });
 
     res.render('imagen-grupo', {
         nombrePagina: `Editar Imagen Grupo: ${grupo.nombre}`,
         grupo
-    })
+    });
+}
+
+//Modifica la imagen en la base de datos y elimina la anterior
+exports.editarImagen = async (req, res, next) => {
+
+    const grupo = await Grupos.findOne({
+        where: {
+            id: req.params.grupoId, 
+            usuarioId: req.user.id
+        }
+    });
+
+    //Si grupo no existe
+    if (!grupo) {
+        req.flash('error', 'Operación no válida');
+        res.redirect('/iniciar-sesion');
+        return next();
+    }
+
+    //Verificar que el archivo sea nuevo
+    // if (req.file) {
+    //     console.log(req.file);
+    // }
+
+    // //Que existe un archivo anterior
+    // if (grupo.imagen) {
+    //     console.log(grupo.imagen);
+    // }
+
+    // Si hay imagen anterior y subimos una nueva, debemos eliminar la imagen previa
+    if (req.file && grupo.imagen) {
+        const imagenAnteriorPath = __dirname + `/../public/uploads/grupos/${grupo.imagen}`;
+
+        //Eliminar archivo con filsystem
+        fs.unlink(imagenAnteriorPath, (error) => {
+            if (error) {
+                console.log(error);
+            }
+            return;
+        })
+    }
+
+    //Imagen nueva (No hay imagen anterior)
+    if (req.file) {
+        grupo.imagen = req.file.filename;
+    }
+
+    //Guardar en la base de datos
+    await grupo.save();
+    req.flash('exito', 'Imagen actualizada con éxito');
+    res.redirect('/administracion');
 }
