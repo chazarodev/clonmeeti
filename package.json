@@ -4,7 +4,9 @@
   "description": "Proyecto meeti con Node, PostgreSQL y EJS",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon ./index.js"
+    "dev": "nodemon ./index.js",
+    "start": "concurrently \"npm run dev\" \"npm run watch\"",
+    "watch": "webpack -w --mode development"
   },
   "keywords": [
     "Nodejs",
@@ -14,10 +16,16 @@
   "author": "Alberto Cházaro Romero",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.13"
+    "@babel/core": "^7.15.8",
+    "@babel/preset-env": "^7.15.8",
+    "babel-loader": "^8.2.2",
+    "nodemon": "^2.0.13",
+    "webpack": "^5.58.2",
+    "webpack-cli": "^4.9.0"
   },
   "dependencies": {
     "bcrypt-nodejs": "^0.0.3",
+    "concurrently": "^6.3.0",
     "connect-flash": "^0.1.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",
