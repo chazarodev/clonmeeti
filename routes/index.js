@@ -64,6 +64,10 @@ module.exports = function() {
         authController.usuarioAutenticado,
         gruposController.formEliminarGrupo
     );
+    router.post('/eliminar-grupo/:grupoId', 
+        authController.usuarioAutenticado,
+        gruposController.eliminarGrupo
+    );
 
     return router;
 }
