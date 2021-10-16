@@ -112,7 +112,6 @@ exports.editarGrupo = async (req, res, next) => {
             usuarioId: req.user.id
         }
     });
-    console.log(grupo);
 
     //No es el dueño del grupo || no existe grupo
     if (!grupo) {
@@ -122,12 +121,14 @@ exports.editarGrupo = async (req, res, next) => {
     }
 
     //Datos correctos
-    const {nombre, descripcion, categoriaId, url} = req.body;   
+    const {nombre, descripcion, categoria, url} = req.body;
+    
+    console.log(req.body)
 
     //Asignar los valores
     grupo.nombre = nombre;
     grupo.descripcion = descripcion;
-    grupo.categoriaId = categoriaId;
+    grupo.categoriaId = categoria;
     grupo.url = url;
 
     //Guardar cambios
@@ -135,4 +136,14 @@ exports.editarGrupo = async (req, res, next) => {
 
     req.flash('exito', 'Cambios Almacenados Correctamente');
     res.redirect('/administracion');
+}
+
+//Muestra el formulario para editar una imagen de grupo
+exports.formEditarImagen = async (req, res) => {
+    const grupo = await Grupos.findByPk(req.params.grupoId);
+
+    res.render('imagen-grupo', {
+        nombrePagina: `Editar Imagen Grupo: ${grupo.nombre}`,
+        grupo
+    })
 }
