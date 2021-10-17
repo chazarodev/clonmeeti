@@ -1,5 +1,6 @@
 const Grupos = require('../models/Grupos');
 const Meeti = require('../models/Meeti');
+const moment = require('moment');
 
 exports.panelAdministracion = async (req, res) => {
     //Consultas
@@ -13,6 +14,7 @@ exports.panelAdministracion = async (req, res) => {
     res.render('administracion', {
         nombrePagina: 'Panel de Administración',
         grupos,
-        meeti
+        meeti,
+        moment
     })
 }
