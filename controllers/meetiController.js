@@ -68,3 +68,30 @@ exports.sanitizarMeeti = (req, res, next) => {
 
     next();
 }
+
+//Muestra el formulario para editar un meeti
+exports.formEditarMeeti = async (req, res) => {
+    const consultas = [];
+    consultas.push(Grupos.findAll({
+        where: {
+            usuarioId: req.user.id
+        }
+    }));
+    consultas.push(Meeti.findByPk(req.params.id));
+
+    //return promise
+    const [grupos, meeti] = await Promise.all(consultas);
+
+    if (!grupos || !meeti) {
+        req.flash('error', 'Operación no válida');
+        res.redirect('/administracion');
+        return next();
+    }
+
+    //Mostramos la vista
+    res.render('editar-meeti', {
+        nombrePagina: `Editar Meeti: ${meeti.titulo}`,
+        grupos,
+        meeti
+    })
+}
