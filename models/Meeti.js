@@ -19,7 +19,7 @@ const Meeti = db.define('meeti', {
             allowNull: false,
             validate: {
                 notEmpty: {
-                    mdg: 'Agrega un Título'
+                    msg: 'Agrega un Título'
                 }
             }
         },
