@@ -86,12 +86,20 @@ module.exports = function() {
         authController.usuarioAutenticado,
         meetiController.formEditarMeeti
     );
-    
     router.post('/editar-meeti/:id',
         authController.usuarioAutenticado,
         meetiController.editarMeeti
     );
 
+    //Eliminar meeti
+    router.get('/eliminar-meeti/:id', 
+        authController.usuarioAutenticado,
+        meetiController.formEliminarMeeti
+    );
+    router.post('/eliminar-meeti/:id', 
+        authController.usuarioAutenticado,
+        meetiController.eliminarMeeti
+    );
 
     return router;
 }
