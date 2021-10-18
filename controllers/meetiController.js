@@ -95,3 +95,44 @@ exports.formEditarMeeti = async (req, res) => {
         meeti
     })
 }
+
+//Almacena los cambios en el meeti (BD)
+exports.editarMeeti = async (req, res, next) => {
+    const meeti = await Meeti.findOne({
+        where: {
+            id: req.params.id,
+            usuarioId: req.user.id
+        }
+    });
+
+    if (!meeti) {
+        req.flash('error', 'Operación no válida');
+        res.redirect('/administracion');
+        return next(); 
+    }
+
+    //Asignar los valores
+    const {grupoId, titulo, invitado, fecha, hora, cupo, descripcion, direccion, ciudad, estado, pais, lat, lng} = req.body;
+
+    meeti.grupoId = grupoId;
+    meeti.titulo = titulo;
+    meeti.invitado = invitado;
+    meeti.fecha = fecha;
+    meeti.hora = hora;
+    meeti.cupo = cupo;
+    meeti.descripcion = descripcion;
+    meeti.direccion = direccion;
+    meeti.ciudad = ciudad;
+    meeti.estado = estado;
+    meeti.pais = pais;
+
+    //Asignar point (ubicacion)
+    const point = {type: 'Point', coordinates: [parseFloat(lat), parseFloat(lng)]}
+
+    meeti.ubicacion = point;
+
+    //Almacenarlo en bd
+    await meeti.save();
+    req.flash('exito', 'Cambios actualizados correctamente');
+    res.redirect('/administracion');
+}
