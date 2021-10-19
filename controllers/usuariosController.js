@@ -87,3 +87,25 @@ exports.formEditarPerfil = async (req, res) => {
         usuario
     })
 }
+
+//Almacena en la db los cambios al perfil
+exports.editarPerfil = async (req, res) => {
+
+    const usuario = await Usuarios.findByPk(req.user.id);
+
+    req.sanitizeBody('nombre');
+    req.sanitizeBody('email');
+    //Leer los datos del form
+    const {nombre, descripcion, email} = req.body;
+
+    //Asignar los valores
+    usuario.nombre = nombre;
+    usuario.descripcion = descripcion;
+    usuario.email = email;
+
+    //guardar en la db
+    await usuario.save();
+
+    req.flash('exito', 'Cambios guardados correctamente');
+    res.redirect('/administracion');
+}
