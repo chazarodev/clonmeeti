@@ -121,5 +121,16 @@ module.exports = function() {
         usuariosController.cambiarPassword
     );
 
+    //Imagen de perfil
+    router.get('/imagen-perfil', 
+        authController.usuarioAutenticado,
+        usuariosController.formSubirImagenPerfil
+    );
+    router.post('/imagen-perfil', 
+        authController.usuarioAutenticado,
+        usuariosController.subirImagenPerfil,
+        usuariosController.guardarImagenPerfil
+    );
+
     return router;
 }
