@@ -77,3 +77,13 @@ exports.formIniciarSesion = (req, res) => {
         nombrePagina: 'Iniciar Sesión'
     })
 }
+
+//Muestra el formulario para editar el perfil
+exports.formEditarPerfil = async (req, res) => {
+    const usuario = await Usuarios.findByPk(req.user.id);
+
+    res.render('editar-perfil', {
+        nombrePagina: 'Editar Perfil',
+        usuario
+    })
+}
