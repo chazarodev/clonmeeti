@@ -111,5 +111,15 @@ module.exports = function() {
         usuariosController.editarPerfil
     );
 
+    //Modificar el password
+    router.get('/cambiar-password', 
+        authController.usuarioAutenticado,
+        usuariosController.formCambiarPassword
+    );
+    router.post('/cambiar-password', 
+        authController.usuarioAutenticado,
+        usuariosController.cambiarPassword
+    );
+
     return router;
 }

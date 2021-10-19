@@ -109,3 +109,36 @@ exports.editarPerfil = async (req, res) => {
     req.flash('exito', 'Cambios guardados correctamente');
     res.redirect('/administracion');
 }
+
+//Muestra el formulario para cambiar el password
+exports.formCambiarPassword = (req, res) => {
+    res.render('cambiar-password', {
+        nombrePagina: 'Cambia Password',
+    });
+}
+
+//Revisa si el password anterior es correcto
+exports.cambiarPassword = async (req, res, next) => {
+    const usuario = await Usuarios.findByPk(req.user.id);
+
+    //Verificar veracidad del actual password
+    if (!usuario.validarPassword(req.body.anterior)) {
+        req.flash('error', 'El password actual es incorrecto');
+        res.redirect('/administracion');
+        return next();
+    }
+
+    //Si el password es correcto, hashear el nuevo
+    const hash = usuario.hashPassword(req.body.nuevo);
+
+    //Asignar el password al usuario
+    usuario.password = hash;
+
+    //Guardar en la base de datos
+    await usuario.save()
+
+    //Redireccionar
+    req.logout()
+    req.flash('exito', 'Password modificado correctamente, vuelve a iniciar sesión');
+    res.redirect('/iniciar-sesion');
+}
