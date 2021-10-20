@@ -15,7 +15,10 @@ exports.panelAdministracion = async (req, res) => {
             fecha: {
                 [Op.gte] : moment(new Date()).format("YYYY-MM-DD")
             }
-        }
+        },
+        order: [
+            ['fecha', 'ASC'] //Ordenar los meetis de por fecha de forma descendente DES o ascendente ASC
+        ]
     }));
     consultas.push(Meeti.findAll({
         where: {
