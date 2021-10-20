@@ -1,6 +1,5 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db');
-const uuid = require('uuid').v4;
 const slug = require('slug');
 const shorid = require('shortid');
 
@@ -12,7 +11,6 @@ const Meeti = db.define('meeti', {
             type: Sequelize.UUID,
             primaryKey: true,
             allowNull: false,
-            defaultValue: uuid()
         },
         titulo: {
             type: Sequelize.STRING,
