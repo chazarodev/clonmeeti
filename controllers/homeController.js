@@ -37,6 +37,7 @@ exports.home = async (req, res)  => {
 
     res.render('home', {
         nombrePagina: 'Inicio',
-        categorias
+        categorias,
+        meetis
     });
 }
