@@ -1,7 +1,7 @@
 import { OpenStreetMapProvider } from "leaflet-geosearch";
+import asistencia from './asistencia';
 
 //Obtener valores de la base de datos
-
 const lat = document.querySelector('#lat').value || 19.654790;
 const lng = document.querySelector('#lng').value || -99.103562;
 const direccion = document.querySelector('#direccion').value || '';
