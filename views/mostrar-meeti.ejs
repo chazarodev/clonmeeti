@@ -75,7 +75,12 @@
                             <div class="texto">
                                 <p><%= comentario.mensaje %></p>
                                 <p>Escrito por: <span><a href="/usuarios/<%= comentario.usuario.id %>"><%= comentario.usuario.nombre %></a></span></p>
-                                <input type="button" value="Eliminar" class="btn btn-azul">
+                                <% if (comentario.usuarioId === usuario.id) { %> 
+                                    <form action="/eliminar-comentario" method="post" class="eliminar-comentario">
+                                        <input type="hidden" name="idcomentario" value="<%= comentario.id %>">
+                                        <input type="submit" value="Eliminar" class="btn btn-azul">
+                                    </form>
+                                <% } %>
                             </div>
                         </div><!--Comentario-->                
                     <% }) %> 

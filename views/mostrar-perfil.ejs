@@ -11,8 +11,8 @@
         </div>
     </div><!--Info-usuario-->
     <div class="grupos-usuario">
+        <h2>Grupos de: <%= usuario.nombre %></h2>
         <% if (grupos.length > 0) { %> 
-            <h2>Grupos de: <%= usuario.nombre %></h2>
             <ul class="lista-grupos">
                 <% grupos.forEach(grupo => { %>
                     <li>
