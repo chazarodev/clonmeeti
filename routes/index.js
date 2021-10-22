@@ -12,7 +12,8 @@ const meetiController = require('../controllers/meetiController');
 //Controller frontend
 const meetiControllerFE = require('../controllers/frontend/meetiControllerFE');
 const usuariosControllerFE = require('../controllers/frontend/usuariosControllerFE');
-const gruposControllerFE = require('../controllers/frontend/gruposControllerFE')
+const gruposControllerFE = require('../controllers/frontend/gruposControllerFE');
+const comentariosControllerFE = require('../controllers/frontend/comentariosControllerFE');
 
 module.exports = function() {
 
@@ -32,6 +33,11 @@ module.exports = function() {
     //Mostrar el arreglo de asistentes al meeti
     router.get('/asistentes/:slug',
         meetiControllerFE.mostrarAsistentes
+    );
+
+    /** Agrega Comentarios en el meeti */
+    router.post('/meeti/:id', 
+        comentariosControllerFE.agregarComentario
     );
 
     //Mostrar el perfil de los usuarios frontend
