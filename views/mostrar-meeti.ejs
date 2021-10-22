@@ -72,16 +72,20 @@
                 </div>
 
                 <!--Formulario de comentarios-->
-                <form action="#" class="default-form comentarios">
-                    <legend>Agrega un comentario</legend>
-                    <div class="campo">
-                        <label>Comentario</label>
-                        <textarea name="comentario"></textarea>
-                    </div>
-                    <div class="campo enviar">
-                        <input type="submit" value="Enviar" class="btn btn-rosa">
-                    </div>
-                </form>
+                <% if (usuario.id) { %>
+                    <form action="/meeti/<%= meeti.slug %>" method="post" class="default-form comentarios">
+                        <legend>Agrega un comentario</legend>
+                        <div class="campo">
+                            <label>Comentario</label>
+                            <textarea name="comentario"></textarea>
+                        </div>
+                        <div class="campo enviar">
+                            <input type="submit" value="Enviar" class="btn btn-rosa">
+                        </div>
+                    </form>
+                <% } else { %>
+                    <p>Inicia Sesión y deja un comentario</p>
+                <% }%>
 
                 <!--/Formulario comentarios-->
             </div><!--comentarios-->
