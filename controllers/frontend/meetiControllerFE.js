@@ -1,6 +1,7 @@
 const Meeti = require('../../models/Meeti');
 const Grupos = require('../../models/Grupos');
 const Categorias = require('../../models/Categorias');
+const Comentarios = require('../../models/Comentarios');
 const Usuarios = require('../../models/Usuarios');
 const moment = require('moment');
 const Sequelize = require('sequelize');
@@ -20,16 +21,30 @@ exports.mostrarMeeti = async (req, res) => {
             }
         ] 
     });
-
+ 
     //Si no existe
     if (!meeti) {
         res.redirect('/');
     }
+    
+    //Consultar los comentarios
+    const comentarios = await Comentarios.findAll({
+        where: {
+            meetiId: meeti.id
+        },
+        include: [
+            {
+                model: Usuarios,
+                attributes: ['id', 'nombre', 'imagen'] 
+            }
+        ]
+    });
 
     //Pasar Resultado a la vista
     res.render('mostrar-meeti',{
         nombrePagina: meeti.titulo,
         meeti,
+        comentarios,
         moment
     });
 }
