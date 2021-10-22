@@ -23,10 +23,10 @@ function eliminarComentario(e) {
         confirmButtonColor: '#3085d6',
         cancelButtonColor: '#d33',
         confirmButtonText: 'Si, Borrar!',
-        cancelButton: 'Cancelar'
+        cancelButtonText: 'Cancelar'
     })
     .then((result) => {
-        if (result.isConfirmed) {
+        if (result.value) {
 
             //Tomar el id del comentario
             const comentarioId = this.children[0].value;
@@ -37,17 +37,17 @@ function eliminarComentario(e) {
             }
 
             //Ejecutar axios y enlazar los datos
+            axios.post(this.action, datos).then(respuesta => {      
+                Swal.fire('Eliminado!', respuesta.data, 'success');
 
-            axios.post(this.action, datos)
-                .then(respuesta => {      
-                console.log(respuesta);
-            })
+                //Eliminar del dom
+                this.parentElement.parentElement.remove();
+            }).catch(error => {
+                if (error.response.status === 403 || error.response.status === 404) {
+                    Swal.fire('Error', error.response.data, 'error');
+                }
+            }) 
 
-            Swal.fire(
-                'Eliminado!',
-                'El comentario ha sido eliminado',
-                'success'
-            )
         }
     })
 }

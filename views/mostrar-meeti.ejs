@@ -75,9 +75,9 @@
                             <div class="texto">
                                 <p><%= comentario.mensaje %></p>
                                 <p>Escrito por: <span><a href="/usuarios/<%= comentario.usuario.id %>"><%= comentario.usuario.nombre %></a></span></p>
-                                <% if (comentario.usuarioId === usuario.id) { %> 
+                                <% if (comentario.usuarioId === usuario.id || meeti.usuarioId === usuario.id) { %> 
                                     <form action="/eliminar-comentario" method="post" class="eliminar-comentario">
-                                        <input type="hidden" name="idcomentario" value="<%= comentario.id %>">
+                                        <input type="hidden" name="idComentario" value="<%= comentario.id %>">
                                         <input type="submit" value="Eliminar" class="btn btn-azul">
                                     </form>
                                 <% } %>
